@@ -72,19 +72,32 @@ def translate_text(text, language="FR") :
     return result
 
 
+def search(input) :
+    wb.open_new_tab(f"https://www.google.com/search?q={input}")
+
+
+search_button = ctk.CTkButton(root, text="Search", command=search(texte))
+search_button.place(relx=0.5, rely=0.5, anchor="center")
+
+
 # recognize the audio
 def recognize() :
     try :
+        global texte
         audio = get_audio()
         texte = r.recognize_google(audio)
 
         # writing the text in the english file
-        write_text(texte, path_en)
-        frame.label_text.configure(text=texte)
+        if texte :
+            write_text(texte, path_en)
+            frame.label_text.configure(text=texte)
 
         # translating the text & showing it
         translated_text = translate_text(texte)
-        frame.label_translated.configure(text=translated_text)
+
+        if translated_text :
+            frame.label_translated.configure(text=translated_text)
+
 
         # writing the text in the french file
         write_text(translated_text, path_fr)
