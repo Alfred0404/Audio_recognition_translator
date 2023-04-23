@@ -1,4 +1,5 @@
-# speech recognition script, using google recognization system
+# speech recognition script, using google recognization system and deepl api
+# UI made with customtkinter
 
 # importing the libraries
 import speech_recognition as sr
@@ -18,6 +19,30 @@ path_en = "./text/eng.txt"
 path_fr = "./text/fr.txt"
 auth_key = "d7f5b7bc-b5b0-b348-4e8f-1958c8223844:fx"
 translator = dl.Translator(auth_key)
+
+
+# creating the frame
+class MyFrame(ctk.CTkFrame):
+    def __init__(self, master, **kwargs):
+        super().__init__(master, **kwargs)
+
+        # add widgets onto the frame...
+        self.label1 = ctk.CTkLabel(self)
+        self.label1.grid(row=0, column=0, padx=20)
+        self.label2 = ctk.CTkLabel(self)
+        self.label2.grid(row=0, column=1, padx=20)
+        self.label_text = ctk.CTkLabel(self)
+        self.label_text.grid(row=1, column=0, padx=20)
+        self.label_translated = ctk.CTkLabel(self)
+        self.label_translated.grid(row=1, column=1, padx=20)
+
+        self.label1.configure(text="Text")
+        self.label2.configure(text="Translated text")
+
+frame = MyFrame(root)
+frame.place(relx=0.5, rely=0.35, anchor="center")
+
+
 
 # getting the audio
 def get_audio() :
@@ -52,18 +77,14 @@ def recognize() :
     try :
         audio = get_audio()
         texte = r.recognize_google(audio)
-        print(f"I think you said : \n{texte}")
-        label = ctk.CTkLabel(root, text=f"I think you said : \n{texte}")
-        label.pack()
 
         # writing the text in the english file
         write_text(texte, path_en)
+        frame.label_text.configure(text=texte)
 
         # translating the text & showing it
         translated_text = translate_text(texte)
-        print(f"Translated text : \n{translated_text}")
-        label_translated = ctk.CTkLabel(root, text=f"Translated text : \n{translated_text}")
-        label_translated.pack()
+        frame.label_translated.configure(text=translated_text)
 
         # writing the text in the french file
         write_text(translated_text, path_fr)
@@ -77,6 +98,6 @@ def recognize() :
 
 
 button_recognize = ctk.CTkButton(root, text="START", command=recognize)
-button_recognize.pack()
+button_recognize.place(relx=0.5, rely=0.25, anchor="center")
 
 root.mainloop()
