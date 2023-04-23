@@ -42,10 +42,6 @@ class MyFrame(ctk.CTkFrame):
 frame = MyFrame(root)
 frame.place(relx=0.5, rely=0.35, anchor="center")
 
-search_button = ctk.CTkButton(root, text="SEARCH", command=lambda: search(read_text(path_fr)), width=180)
-search_button.place(relx=0.68, rely=0.253, anchor="center")
-
-
 
 # getting the audio
 def get_audio() :
@@ -107,6 +103,9 @@ def recognize() :
     except sr.RequestError as e :
         print(f"Error : {e}")
 
+
+search_button = ctk.CTkButton(root, text="SEARCH", command=lambda: search(read_text(path_fr)), width=180)
+search_button.place(relx=0.68, rely=0.253, anchor="center")
 
 button_recognize = ctk.CTkButton(root, text="START", command=recognize, width=175)
 button_recognize.place(relx=0.315, rely=0.253, anchor="center")
