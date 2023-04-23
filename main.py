@@ -42,6 +42,9 @@ class MyFrame(ctk.CTkFrame):
 frame = MyFrame(root)
 frame.place(relx=0.5, rely=0.35, anchor="center")
 
+search_button = ctk.CTkButton(root, text="SEARCH", command=lambda: search(read_text(path_fr)), width=180)
+search_button.place(relx=0.68, rely=0.253, anchor="center")
+
 
 
 # getting the audio
@@ -76,14 +79,9 @@ def search(input) :
     wb.open_new_tab(f"https://www.google.com/search?q={input}")
 
 
-search_button = ctk.CTkButton(root, text="Search", command=search(texte))
-search_button.place(relx=0.5, rely=0.5, anchor="center")
-
-
 # recognize the audio
 def recognize() :
     try :
-        global texte
         audio = get_audio()
         texte = r.recognize_google(audio)
 
@@ -110,7 +108,7 @@ def recognize() :
         print(f"Error : {e}")
 
 
-button_recognize = ctk.CTkButton(root, text="START", command=recognize)
-button_recognize.place(relx=0.5, rely=0.25, anchor="center")
+button_recognize = ctk.CTkButton(root, text="START", command=recognize, width=175)
+button_recognize.place(relx=0.315, rely=0.253, anchor="center")
 
 root.mainloop()
