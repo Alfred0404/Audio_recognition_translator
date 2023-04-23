@@ -7,11 +7,13 @@ import webbrowser as wb
 import deepl as dl
 import customtkinter as ctk
 
+
 # creating the main window
 root = ctk.CTk()
 ctk.set_appearance_mode("dark")
 root.geometry("500x500")
 root.title("Speech Recognition Translator")
+root.iconbitmap("./assets/microphone.ico")
 
 
 # path to the text file
@@ -39,7 +41,7 @@ class MyFrame(ctk.CTkFrame):
         self.label1.configure(text="Text")
         self.label2.configure(text="Translated text")
 
-frame = MyFrame(root)
+frame = MyFrame(root, width=400, height=200, bg="black")
 frame.place(relx=0.5, rely=0.35, anchor="center")
 
 
@@ -71,6 +73,7 @@ def translate_text(text, language="FR") :
     return result
 
 
+# searching the text in google
 def search(input) :
     wb.open_new_tab(f"https://www.google.com/search?q={input}")
 
@@ -95,7 +98,6 @@ def recognize() :
 
         # writing the text in the french file
         write_text(translated_text, path_fr)
-
 
     except sr.UnknownValueError :
         print("Oups...Can't understand what you said...")
